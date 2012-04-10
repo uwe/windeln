@@ -8,6 +8,8 @@
                 font-size: small;
             }
         </style>
+        <script type="text/javascript" src="http://wms.assoc-amazon.de/20070822/DE/js/link-enhancer-common.js?tag=windeln05-21">
+        </script>
     </head>
     <body>
         <table border="1" cellpadding="2" cellspacing="0">
@@ -25,8 +27,8 @@
                 <tr>
                     [% IF loop.first %]
                     <td rowspan="[% sizes.size %]" valign="top">
-                        <a href="[% TYPE.$type.url | url %]">[% TYPE.$type.name | html %]</a><br />
-                        <a href="[% TYPE.$type.url | url %]"><img src="img/[% TYPE.$type.image %]" /></a>
+                        <a href="[% TYPE.$type.url %]">[% TYPE.$type.name | html %]</a><br />
+                        <a href="[% TYPE.$type.url %]"><img src="img/[% TYPE.$type.image %]" /></a>
                     </td>
                     [% END %]
                     <td align="center">
@@ -38,7 +40,9 @@
                             <tr>
                                 [% FOREACH package = DATA.$type.$size.keys.nsort %]
                                 <td>
-                                    <a href="[% DATA.$type.$size.$package.url | url %]"><b>[% DATA.$type.$size.$package.cent %] Cent</b></a><br />
+                                    <a href="[% DATA.$type.$size.$package.url %]"><b>[% DATA.$type.$size.$package.cent %] Cent</b></a>
+                                    <img src="[% DATA.$type.$size.$package.img_url %]" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+                                    <br />
                                     <div class="package-price">([% DATA.$type.$size.$package.price | fix2 %] &euro; f&uuml;r [% package %] St&uuml;ck)</div>
                                 </td>
                                 [% END %]

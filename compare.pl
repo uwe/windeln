@@ -32,9 +32,10 @@ foreach my $row (@{$dbh->selectall_arrayref($sql, {Slice => {}})}) {
     next unless $price;
 
     $data->{$row->{typ_id}}{$row->{groesse_id}}{$row->{anzahl}} = {
-        price => $price,
-        cent  => sprintf('%.2f', $price / $row->{anzahl}),
-        url   => sprintf('http://www.amazon.de/gp/product/%s/ref=as_li_ss_tl?ie=UTF8&tag=windeln05-21&linkCode=as2&camp=1638&creative=19454&creativeASIN=%s', $row->{asin}, $row->{asin}),
+        price   => $price,
+        cent    => sprintf('%.2f', $price / $row->{anzahl}),
+        url     => sprintf('http://www.amazon.de/gp/product/%s/ref=as_li_ss_tl?ie=UTF8&tag=windeln05-21&linkCode=as2&camp=1638&creative=19454&creativeASIN=%s', $row->{asin}, $row->{asin}),
+        img_url => sprintf('http://www.assoc-amazon.de/e/ir?t=windeln05-21&l=as2&o=3&a=%s', $row->{asin}),
     };
 }
 

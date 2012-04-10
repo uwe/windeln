@@ -38,8 +38,8 @@
                             <tr>
                                 [% FOREACH package = DATA.$type.$size.keys.nsort %]
                                 <td>
-                                    <b>[% DATA.$type.$size.$package.1 %] Cent</b><br />
-                                    <div class="package-price">([% DATA.$type.$size.$package.0 | fix2 %] &euro; f&uuml;r [% package %] St&uuml;ck)</div>
+                                    <a href="[% DATA.$type.$size.$package.url | url %]"><b>[% DATA.$type.$size.$package.cent %] Cent</b></a><br />
+                                    <div class="package-price">([% DATA.$type.$size.$package.price | fix2 %] &euro; f&uuml;r [% package %] St&uuml;ck)</div>
                                 </td>
                                 [% END %]
                             </tr>

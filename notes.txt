@@ -1,0 +1,3 @@
+wget http://amazon.de/dp/B006R2RW4C
+egrep -o B00....... B006R2RW4C | sort |uniq
+

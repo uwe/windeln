@@ -1,0 +1,55 @@
+[% USE Fix2 %]
+[% USE Komma %]
+<html>
+    <head>
+        <title>Preisvergleich Pampers-Windeln bei Amazon</title>
+        <style type="text/css">
+            .package-price, .size-weight {
+                font-size: small;
+            }
+        </style>
+    </head>
+    <body>
+        <table border="1" cellpadding="2" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Windel</th>
+                    <th>Gr&ouml;&szlig;e</th>
+                    <th>Preis (Cent pro St&uuml;ck)</th>
+                </tr>
+            </thead>
+            <tbody>
+                [% FOREACH type = TYPE.keys.nsort %]
+                [% sizes = DATA.$type.keys.nsort %]
+                [% FOREACH size = sizes %]
+                <tr>
+                    [% IF loop.first %]
+                    <td rowspan="[% sizes.size %]" valign="top">
+                        [% TYPE.$type.name | html %]<br />
+                        <img src="img/[% TYPE.$type.image %]" />
+                    </td>
+                    [% END %]
+                    <td align="center">
+                        <b>[% SIZE.$size.name | html %]</b><br />
+                        <div class="size-weight">([% SIZE.$size.gewicht | html %])</div>
+                    </td>
+                    <td>
+                        <table>
+                            <tr>
+                                [% FOREACH package = DATA.$type.$size.keys.nsort %]
+                                <td>
+                                    <b>[% DATA.$type.$size.$package.1 %] Cent</b><br />
+                                    <div class="package-price">([% DATA.$type.$size.$package.0 | fix2 %] &euro; f&uuml;r [% package %] St&uuml;ck)</div>
+                                </td>
+                                [% END %]
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                [% END %]
+                [% END %]
+            </tbody>
+        </table>
+    </body>
+</html>
+

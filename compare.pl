@@ -3,7 +3,7 @@
 use Mojo::Base -strict;
 
 # Template::Plugin::Fix2
-use lib '/home/uwe/repos/ausgaben/lib';
+use lib 'lib';
 
 use DBI;
 use Template;
@@ -41,5 +41,5 @@ my %var = (
     SIZE => $size,
     TYPE => $type,
 );
-$tt2->process('template.html', \%var, 'out.html') or die $tt2->error;
+$tt2->process('template.html', \%var, 'public/index.html') or die $tt2->error;
 

@@ -11,7 +11,8 @@ use Template;
 
 my $dbh = DBI->connect(
     'dbi:mysql:windeln',
-    'windeln', 'windeln',
+    $ENV{UWE_DB_USER} || 'windeln',
+    $ENV{UWE_DB_PASS} || 'windeln',
     {RaiseError => 1},
 );
 

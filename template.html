@@ -25,8 +25,8 @@
                 <tr>
                     [% IF loop.first %]
                     <td rowspan="[% sizes.size %]" valign="top">
-                        [% TYPE.$type.name | html %]<br />
-                        <img src="img/[% TYPE.$type.image %]" />
+                        <a href="[% TYPE.$type.url | url %]">[% TYPE.$type.name | html %]</a><br />
+                        <a href="[% TYPE.$type.url | url %]"><img src="img/[% TYPE.$type.image %]" /></a>
                     </td>
                     [% END %]
                     <td align="center">

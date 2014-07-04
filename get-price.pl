@@ -16,21 +16,30 @@ my $dbh = DBI->connect(
 
 my $ua = Mojo::UserAgent->new(max_redirects => 5);
 
-my $sql = 'SELECT * FROM produkt WHERE aktiv=1 ORDER BY asin';
-foreach my $row (@{$dbh->selectall_arrayref($sql, {Slice => {}})}) {
-    eval {
-        my $tx = $ua->get('http://www.amazon.de/dp/' . $row->{asin});
 
-        my $price = $tx->res->dom->at('b.priceLarge')->text;
-        $price =~ s/EUR //;
-        $price =~ s/,//;
+my $site = $dbh->selectall_hashref('SELECT * FROM seite', 'id');
 
-        $dbh->do(
-            'INSERT INTO preis (produkt_id, datum, preis) VALUES (?, UTC_TIMESTAMP(), ?)',
-            {},
-            $row->{id},
-            $price,
-        );
-    };
+foreach my $site_id (sort keys %$site) {
+    next unless $site_id == 2;
+
+    my $amazon_url = $site->{$site_id}->{base_url};
+
+    my $sql = 'SELECT * FROM produkt WHERE aktiv=1 AND seite_id=? ORDER BY asin';
+    foreach my $row (@{$dbh->selectall_arrayref($sql, {Slice => {}}, $site_id)}) {
+        eval {
+            my $tx = $ua->get($amazon_url . $row->{asin});
+
+            my $price = $tx->res->dom->at('b.priceLarge')->text;
+            $price =~ s/EUR //;
+            $price =~ tr/$,.//d;
+
+            $dbh->do(
+                'INSERT INTO preis (produkt_id, datum, preis) VALUES (?, UTC_TIMESTAMP(), ?)',
+                {},
+                $row->{id},
+                $price,
+            );
+        };
+    }
 }
 
